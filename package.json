@@ -8,7 +8,10 @@
         "protective sign"
     ],
     "license": "CC0-1.0",
-    "dependencies": {},
+    "dependencies": {
+        "arg": "^4.1.1",
+        "inquirer": "7.0.0"
+    },
     "devDependencies": {
         "eslint": "^6.0.1",
         "semver": "^6.2.0",
