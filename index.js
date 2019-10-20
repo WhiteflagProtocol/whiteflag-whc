@@ -8,6 +8,7 @@
 
 // Whiteflag WHL modules //
 const args = require('./lib/arguments');
+const sites = require('./lib/sites');
 
 /*
  * Gracefully crash if an uncaught exception occurs and
@@ -18,9 +19,15 @@ process.on('SIGINT', shutdownCb);
 process.on('SIGTERM', shutdownCb);
 
 // MAIN PROCESS FLOW //
-let options = args.parse(process.argv);
-console.log(`Retrieving site: ${options.site}`);
-process.exit(0);
+args.parse(process.argv, function Cb(err, options) {
+    if (err) errorHandler(err);
+    console.error(`Retrieving site: ${options.site}`);
+    sites.get(options.site, function Cb(err, site) {
+        if (err) errorHandler(err);
+        console.log(JSON.stringify(site));
+        process.exit(0);
+    });
+});
 
 // PRIVATE FUNCTIONS //
 /**
@@ -34,15 +41,25 @@ function shutdownCb() {
 }
 
 /**
+ * Function to handle errors
+ * @function errorHandler
+ * @param {object} err error object if any error
+ */
+function errorHandler(err) {
+    console.err(err.message);
+    return process.exit(1);
+}
+
+/**
  * Callback to log uncaught exceptions
  * @callback uncaughtExceptionCb
  * @param {object} err error object if any error
  */
 function uncaughtExceptionCb(err) {
     if (err.stack) {
-        console.log(`UNCAUGHT EXCEPTION: ${err.stack}`);
+        console.error(`UNCAUGHT EXCEPTION: ${err.stack}`);
     } else {
-        console.log(`UNCAUGHT EXCEPTION: ${err.toString()}`);
+        console.error(`UNCAUGHT EXCEPTION: ${err.toString()}`);
     }
     return process.exit(2);
 }
