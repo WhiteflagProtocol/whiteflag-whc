@@ -31,6 +31,9 @@
         "doc": "./doc"
     },
     "main": "index.js",
+    "bin": {
+        "wfwhl": "./index.js"
+    },
     "scripts": {
         "start": "node whiteflag.js",
         "test": "mocha --recursive",
