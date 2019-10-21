@@ -19,12 +19,12 @@ process.on('SIGINT', shutdownCb);
 process.on('SIGTERM', shutdownCb);
 
 // MAIN PROCESS FLOW //
-args.parse(process.argv, function Cb(err, options) {
+args.parse(process.argv, function argumentsCb(err, options) {
     if (err) errorHandler(err);
-    console.error(`Retrieving site: ${options.site}`);
-    sites.get(options.site, function Cb(err, site) {
+
+    // Get the requested site
+    sites.get(options, function sitesCb(err, site) {
         if (err) errorHandler(err);
-        console.log(JSON.stringify(site));
         process.exit(0);
     });
 });
@@ -46,7 +46,7 @@ function shutdownCb() {
  * @param {object} err error object if any error
  */
 function errorHandler(err) {
-    console.err(err.message);
+    console.error(err.message);
     return process.exit(1);
 }
 
