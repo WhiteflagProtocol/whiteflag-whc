@@ -20,9 +20,9 @@ process.on('SIGINT', interruptCb);
 process.on('SIGTERM', interruptCb);
 
 // MAIN //
-main(function mainCb(err) {
-    if (err) errorHandler(err);
-    process.exit(0);
+main(function mainCb(err, exitcode = 0) {
+    if (err) errorHandler(err, exitcode);
+    process.exit(exitcode);
 });
 
 // PRIVATE FUNCTIONS //
@@ -36,13 +36,14 @@ function main(callback) {
         if (err) return callback(err);
 
         // Get the requested site
-        sites.get(options, function sitesCb(err, site) {
-            if (err) return callback(err);
+        sites.get(options, function sitesCb(err, sites) {
+            if (err) return callback(err, 2);
+            if (sites.length === 0) return callback(null, 1);
 
             // Process Whiteflag messages
-            whiteflag.processData(site, options, function wfProcessDataCb(err) {
+            whiteflag.processData(sites, options, function wfProcessDataCb(err) {
                 if (err) return callback(err);
-                return callback(null);
+                return callback(null, 0);
             });
         });
     });
@@ -53,9 +54,9 @@ function main(callback) {
  * @function errorHandler
  * @param {object} err error object if any error
  */
-function errorHandler(err) {
+function errorHandler(err, exitcode = 2) {
     console.error(err.message);
-    return process.exit(2);
+    return process.exit(exitcode);
 }
 
 /**
