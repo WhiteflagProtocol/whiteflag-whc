@@ -12,7 +12,7 @@ that allows near real-time communication in conflicts to exchange early
 warning and status information to create shared situational awareness.
 
 Note that this utility only processes *cultural* heritage sites, because
-Whiteflag (currently) only defines a message that corresponds with the
+Whiteflag (currently) only defines a message (`P52`) that corresponds with the
 protective sign for cultural property i.a.w. [the 1954 Hague Convention](http://www.unesco.org/new/en/culture/themes/armed-conflict-and-heritage/convention-and-protocols/1954-hague-convention/).
 
 This utility is for technology development, test and evaluation purposes only.
@@ -48,7 +48,7 @@ npm link
 To invoke the Whitefag WHL utility from the command line, use the `wfwhl`
 command with the following arguments from any directory:
 
-```shell
+```
 wfwhl [-s <id> ...] [-w <url>|-f <file>]
       [-t -i <url> -b <blockchain> -a <address>] [-ov]
 ```
@@ -57,15 +57,17 @@ wfwhl [-s <id> ...] [-w <url>|-f <file>]
 
 The main options are the following:
 
-* `-s`, `--sites`       : Specify the world heritage site(s) to be processed by \<id\> number; multiple sites may be specified. If no sites are specified, all sites are processed.
-* `-w`, `--web`         : The source  \<url\> of the WHL in XML on the web. If not specified the default is `https://whc.unesco.org/en/list/xml/`. Cannot be used with `-f`.
-* `-f`, `--file`        : The source \<file\> containing the WHL in XML. Cannot be used with `-w`.
-* `-t`, `--transmit`    : Transmit the Whiteflag message(s) on the blockchain. Requires `-i`, `-b` and `-a` to be specified.
-* `-i`, `--interface`   : The Whiteflag API REST interface \<url\> to post the message(s) to be sent.
-* `-b`, `--blockchain`  : The \<blockhain\> to be used for sending the message(s).
-* `-a`, `--address`     : The blockchain \<address\> to be used for sending the message(s).
-* `-o`, `--stdout`      : Send the Whiteflag message(s) to stdout. This allows the data to be piped to other processes.
-* `-v`, `--verbose`     : Provide detailed processing output.
+* `-s`, `--sites`        : Specify the world heritage site(s) to be processed by \<id\> number; multiple sites may be specified. If no sites are specified, all sites are processed.
+* `-w`, `--web`          : The source  \<url\> of the WHL in XML on the web. If not specified the default is `https://whc.unesco.org/en/list/xml/`. Cannot be used with `-f`.
+* `-f`, `--file`         : The source \<file\> containing the WHL in XML. Cannot be used with `-w`.
+* `-t`, `--transmit`**   : Transmit the Whiteflag message(s) on the blockchain. Requires `-i`, `-b` and `-a` to be specified.
+* `-i`, `--interface`**  : The Whiteflag API REST interface \<url\> to post the message(s) to be sent.
+* `-b`, `--blockchain`** : The \<blockchain\> to be used for sending the message(s).
+* `-a`, `--address`**    : The blockchain \<address\> to be used for sending the message(s).
+* `-o`, `--stdout`       : Send the Whiteflag message(s) to stdout. This allows the data to be piped to other processes.
+* `-v`, `--verbose`      : Provide detailed processing output.
+
+**: _in development_
 
 Other supporting options are:
 
