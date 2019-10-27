@@ -13,19 +13,19 @@ const whiteflag = require('./lib/whiteflag');
 
 /*
  * Gracefully crash if an uncaught exception occurs and
- * ensure proper shutdonwn when process is stopped
+ * ensure proper shutdown when process is stopped
  */
 process.on('uncaughtException', uncaughtExceptionCb);
 process.on('SIGINT', interruptCb);
 process.on('SIGTERM', interruptCb);
 
-// MAIN //
+// EXECUTE MAIN PROCESS FUNCTION //
 main(function mainCb(err, exitcode = 0) {
-    if (err) errorHandler(err, exitcode);
-    process.exit(exitcode);
+    if (err) return errorHandler(err, exitcode);
+    return process.exit(exitcode);
 });
 
-// PRIVATE FUNCTIONS //
+// MAIN FUNCTIONS //
 /**
  * Main process function
  * @function main
@@ -49,6 +49,7 @@ function main(callback) {
     });
 }
 
+// CALLBACK AND HANDLER FUNCTIONS //
 /**
  * Function to handle errors
  * @function errorHandler

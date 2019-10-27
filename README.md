@@ -27,7 +27,7 @@ environment.
 To deploy the Whiteflag WHL utility, make sure the following prerequisite
 software is installed:
 
-* Node.js w/ NPM
+* [Node.js](https://nodejs.org/en/about/) including [NPM](https://www.npmjs.com/get-npm)
 
 ### Deployment
 
@@ -58,7 +58,7 @@ wfwhl [-s <id> ...] [-w <url>|-f <file>]
 The main options are the following:
 
 * `-s`, `--sites`        : Specify the world heritage site(s) to be processed by \<id\> number; multiple sites may be specified. If no sites are specified, all sites are processed.
-* `-w`, `--web`          : The source  \<url\> of the WHL in XML on the web. If not specified the default is `https://whc.unesco.org/en/list/xml/`. Cannot be used with `-f`.
+* `-w`, `--web`          : The source \<url\> of the WHL in XML on the web. If not specified the default is `https://whc.unesco.org/en/list/xml/`. Cannot be used with `-f`.
 * `-f`, `--file`         : The source \<file\> containing the WHL in XML. Cannot be used with `-w`.
 * `-t`, `--transmit`**   : Transmit the Whiteflag message(s) on the blockchain. Requires `-i`, `-b` and `-a` to be specified.
 * `-i`, `--interface`**  : The Whiteflag API REST interface \<url\> to post the message(s) to be sent.
