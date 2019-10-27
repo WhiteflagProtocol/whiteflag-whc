@@ -1,0 +1,74 @@
+.TH WFWHL 1
+.SH NAME
+wfwhl \- send protective signs for WHL sites with Whiteflag
+.SH SYNOPSIS
+.B wfwhl
+[\fI\,OPTION\/\fR]...
+.SH DESCRIPTION
+Create and send Whiteflag messages for specified cultural heritage sites listed
+on the UNESCO World Heritage List, which is the digital equivalent of placing a
+physical protective sign.
+.PP
+Whiteflag is a fully neutral and secure communciations means based on
+blockchain technology. It enables near real-time communication in armed
+conflicts and disasters to exchange early warning and status information
+to create shared situational awareness.
+.SH OPTIONS
+.TP
+.BR \-s ", " \-\-sites =\fISITEID\fR
+Specify the world heritage site(s) to be processed by \fISITEID\fR number; multiple
+sites may be specified. If no sites are specified, all sites are processed.
+.TP
+.BR \-w ", " \-\-web =\fIURL\fR
+The source \fIURL\fR of the WHL in XML on the web. If not specified the default is
+\fIhttps://whc.unesco.org/en/list/xml/\fR. Cannot be used with \fB\-f\fR.
+.TP
+.BR \-f ", " \-\-file =\fIFILE\fR
+The source \fIFILE\fR containing the WHL in XML. Cannot be used with \fB\-w\fR.
+.TP
+.BR \-t ", " \-\-transmit
+(NOT IMPLEMENTED) Transmit the Whiteflag message(s) on the blockchain. Requires \fB\-i\fR,
+\fB\-b\fR and \fB\-a\fR to be specified, either on the command line or using
+a configuration file with \fB\-\-config\fR.
+.TP
+.BR \-i ", " \-\-interface =\fIURL\fR
+(NOT IMPLEMENTED) The Whiteflag API REST interface \fIURL\fR to post the message(s) to be sent.
+.TP
+.BR \-b ", " \-\-blockchain =\fIBLOCKCHAIN\fR
+(NOT IMPLEMENTED) The \fIBLOCKCHAIN\fR to be used for sending the message(s).
+.TP
+.BR \-a ", " \-\-address =\fIADDRESS\fR
+(NOT IMPLEMENTED) The blockchain \fIADDRESS\fR to be used for sending the message(s).
+.TP
+.BR \-o ", " \-\-stdout
+Send the Whiteflag message(s) to stdout. This allows the data to be piped to other processes.
+.TP
+.BR \-v ", " \-\-verbose
+Provide detailed processing output.
+.TP
+.BR \-\-help
+Show help message.
+.TP
+.BR \-\-version
+Show version number.
+.TP
+.BR \-\-config =\fIFILE\fR
+Path to a JSON config \fIFILE\fR with preconfigured arguments; especially useful to
+specify Whiteflag API interface URL, blockchain and address.
+.SH LEGAL
+THE USAGE OF SIGNS AND SIGNALS WITH THIS SOFTWARE IS SUBJECT TO LOCAL AND/OR INTERNATIONAL LAWS
+.PP
+The Whiteflag WHL utility is dedicated to the public domain under the
+Creative Commons CC0-1.0 Universal Public Domain Dedication statement.
+Note that this only applies to this software, and that this
+explicitly DOES NOT imply endorsement or permission by UNESCO to use
+WHL information, which is subject to the terms and policies of the
+UNESCO World Heritage Centre.
+.PP
+The usage of protective signs is subject to International Humanitarian
+Law. Misuse of protective signs is a punishable violation under local
+and international laws. This utility only provides an additional means of
+communication for certain signs and signals, and it does not replace any
+existing standard, regulation or means of communication, whether mandatory
+or not, including but not limited to physical signs, radio communications,
+official registers, etc.

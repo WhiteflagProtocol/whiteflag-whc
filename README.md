@@ -2,14 +2,15 @@
 
 ## Introduction
 
+Whiteflag is a fully neutral and secure communciations means based on
+blockchain technology. It enables near real-time communication in armed
+conflicts and disasters to exchange early warning and status information
+to create shared situational awareness.
+
 This Whiteflag utility is a [Node.js](https://nodejs.org/en/about/) command
 line interface (CLI) that creates and sends Whiteflag messages for specified
-cultural heritage sites listed on the UNESCO World Heritage List.
-
-Sending a Whiteflag message is the digital equivalent of placing a physical
-protective sign. Whiteflag is a fully neutral and secure communciations means
-that allows near real-time communication in conflicts to exchange early
-warning and status information to create shared situational awareness.
+cultural heritage sites listed on the UNESCO World Heritage List. This is the
+digital equivalent of placing a physical protective sign.
 
 Note that this utility only processes *cultural* heritage sites, because
 Whiteflag (currently) only defines a message (`P52`) that corresponds with the
