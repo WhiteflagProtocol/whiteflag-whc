@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 /**
- * @module index
+ * @module main
  * @summary Whiteflag WHL main module
  * @description Module called first when invoking the Whiteflag WHL utility
  */
