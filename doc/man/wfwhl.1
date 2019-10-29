@@ -13,6 +13,10 @@ Whiteflag is a fully neutral and secure communciations means based on
 blockchain technology. It enables near real-time communication in armed
 conflicts and disasters to exchange early warning and status information
 to create shared situational awareness.
+.PP
+The Whiteflag messages that are created and sent are: (1) a \fBP52(0)\fR
+protective sign, followed by (2) an \fBR1(3)\fR resource message with an URL
+linking the protective sign to the corresponding WHL entry.
 .SH OPTIONS
 .TP
 .BR \-s ", " \-\-sites =\fISITEID\fR
@@ -54,7 +58,7 @@ Show version number.
 .TP
 .BR \-\-config =\fIFILE\fR
 Path to a JSON config \fIFILE\fR with preconfigured arguments; especially useful to
-specify Whiteflag API interface URL, blockchain and address.
+specify the Whiteflag API interface URL, blockchain and address.
 .SH LEGAL
 THE USAGE OF SIGNS AND SIGNALS WITH THIS SOFTWARE IS SUBJECT TO LOCAL AND/OR INTERNATIONAL LAWS
 .PP

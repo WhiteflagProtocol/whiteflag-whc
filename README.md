@@ -14,7 +14,7 @@ digital equivalent of placing a physical protective sign.
 
 Note that this utility only processes *cultural* heritage sites, because
 Whiteflag (currently) only defines a message (`P52`) that corresponds with the
-protective sign for cultural property i.a.w. [the 1954 Hague Convention](http://www.unesco.org/new/en/culture/themes/armed-conflict-and-heritage/convention-and-protocols/1954-hague-convention/).
+protective sign for cultural property i.a.w. [the 1954 Hague Convention](http://www.unesco.org/new/en/culture/themes/armed-conflict-and-heritage/convention-and-protocols/1954-hague-convention/). The `P52` protective sign message is followed by an `R1(3)` resource message with an URL linking the protective sign to the corresponding WHL entry.
 
 This utility is for technology development, test and evaluation purposes only.
 This means that it is a tool in support of testing the Whiteflag protocol, but
@@ -58,7 +58,7 @@ wfwhl [-s <id> ...] [-w <url>|-f <file>]
 
 The main options are the following:
 
-* `-s`, `--sites`        : Specify the world heritage site(s) to be processed by \<id\> number; multiple sites may be specified. If no sites are specified, all sites are processed.
+* `-s`, `--sites`        : Specifies the world heritage site(s) by \<id\> number; multiple sites may be specified. If no sites are specified, all sites are processed.
 * `-w`, `--web`          : The source \<url\> of the WHL in XML on the web. If not specified the default is `https://whc.unesco.org/en/list/xml/`. Cannot be used with `-f`.
 * `-f`, `--file`         : The source \<file\> containing the WHL in XML. Cannot be used with `-w`.
 * `-t`, `--transmit`     : Transmit the Whiteflag message(s) on the blockchain. Requires `-i`, `-b` and `-a` to be specified.
@@ -88,7 +88,7 @@ for 3 world heritage sites, with detailed processing information and the
 Whiteflag messages on standard output:
 
 ```shell
-wfwhl -s 23 25 32 -f /data/whl.xml -vo
+wfwhl -f /data/whl.xml -s 23 25 32 -o -v
 ```
 
 To send Whiteflag messages for all cultural heritage sites from the WHL XML
@@ -96,6 +96,24 @@ list contained in a file to standard output:
 
 ```shell
 wfwhl -f /data/whl.xml -o
+```
+
+To transmit Whiteflag messages for 2 specified world heritage sites, with the
+Whiteflag API interface and blockchain details in a JSON configuration file
+and detailed processing information:
+
+```shell
+wfwhl -s 29 49 --config wfwhl.json -t -v
+```
+
+where the `wfwhl.json` configuration file contents may look as follows:
+
+```json
+{
+    "interface": "http://localhost:5746",
+    "blockchain": "ethereum",
+    "address": "10fe33a6a1B26877a2d6fA95eaf4153608B5B5f9"
+}
 ```
 
 ## License
