@@ -1,6 +1,6 @@
 {
     "name": "whiteflag-whl",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Utility to create and send Whiteflag protective signs for cultural heritage sites listed on the World Heritage List",
     "keywords": [
         "whiteflag",

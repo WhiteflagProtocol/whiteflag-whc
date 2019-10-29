@@ -13,6 +13,10 @@ Whiteflag is a fully neutral and secure communciations means based on
 blockchain technology. It enables near real-time communication in armed
 conflicts and disasters to exchange early warning and status information
 to create shared situational awareness.
+.PP
+The Whiteflag messages that are created and sent are: (1) a \fBP52(0)\fR
+protective sign, followed by (2) an \fBR1(3)\fR resource message with an URL
+linking the protective sign to the corresponding WHL entry.
 .SH OPTIONS
 .TP
 .BR \-s ", " \-\-sites =\fISITEID\fR
@@ -27,18 +31,18 @@ The source \fIURL\fR of the WHL in XML on the web. If not specified the default 
 The source \fIFILE\fR containing the WHL in XML. Cannot be used with \fB\-w\fR.
 .TP
 .BR \-t ", " \-\-transmit
-(NOT IMPLEMENTED) Transmit the Whiteflag message(s) on the blockchain. Requires \fB\-i\fR,
+Transmit the Whiteflag message(s) on the blockchain. Requires \fB\-i\fR,
 \fB\-b\fR and \fB\-a\fR to be specified, either on the command line or using
 a configuration file with \fB\-\-config\fR.
 .TP
 .BR \-i ", " \-\-interface =\fIURL\fR
-(NOT IMPLEMENTED) The Whiteflag API REST interface \fIURL\fR to post the message(s) to be sent.
+The Whiteflag API REST interface \fIURL\fR to post the message(s) to be sent.
 .TP
 .BR \-b ", " \-\-blockchain =\fIBLOCKCHAIN\fR
-(NOT IMPLEMENTED) The \fIBLOCKCHAIN\fR to be used for sending the message(s).
+The \fIBLOCKCHAIN\fR to be used for sending the message(s).
 .TP
 .BR \-a ", " \-\-address =\fIADDRESS\fR
-(NOT IMPLEMENTED) The blockchain \fIADDRESS\fR to be used for sending the message(s).
+The blockchain \fIADDRESS\fR to be used for sending the message(s).
 .TP
 .BR \-o ", " \-\-stdout
 Send the Whiteflag message(s) to stdout. This allows the data to be piped to other processes.
@@ -54,7 +58,7 @@ Show version number.
 .TP
 .BR \-\-config =\fIFILE\fR
 Path to a JSON config \fIFILE\fR with preconfigured arguments; especially useful to
-specify Whiteflag API interface URL, blockchain and address.
+specify the Whiteflag API interface URL, blockchain and address.
 .SH LEGAL
 THE USAGE OF SIGNS AND SIGNALS WITH THIS SOFTWARE IS SUBJECT TO LOCAL AND/OR INTERNATIONAL LAWS
 .PP
