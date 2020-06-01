@@ -1,6 +1,6 @@
 {
     "name": "whiteflag-whl",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Utility to create and send Whiteflag protective signs for cultural heritage sites listed on the World Heritage List",
     "keywords": [
         "whiteflag",
@@ -9,15 +9,15 @@
     ],
     "license": "CC0-1.0",
     "dependencies": {
-        "yargs": "^14.2.0",
-        "xml2js": "^0.4.22"
+        "yargs": "^15.2.1",
+        "xml2js": "^0.4.23"
     },
     "devDependencies": {
-        "eslint": "^6.0.1",
-        "semver": "^6.2.0",
-        "mocha": "^6.1.4",
-        "jsdoc": "~3.6.3",
-        "cloc": "^2.5.0",
+        "eslint": "^7.1.0",
+        "semver": "^7.3.0",
+        "mocha": "^7.2.0",
+        "jsdoc": "~3.6.4",
+        "cloc": "^2.5.1",
         "license-checker": "^25.0.1"
     },
     "homepage": "https://github.com/WhiteflagProtocol/whiteflag-whl#readme",
@@ -42,7 +42,7 @@
     "scripts": {
         "start": "node main.js",
         "test": "mocha --recursive",
-        "doc:src": "jsdoc -c .jsdoc.json",
+        "doc:src": "rm -rf docs/jsdoc/* && jsdoc -c .jsdoc.json",
         "build:doc": "npm run doc:src",
         "build": "npm run build:doc",
         "count": "cloc --exclude-dir=node_modules,.vscode --exclude-list-file=.clocignore --by-file lib",

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: whl.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: whl.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+/**
+ * @module lib/whl
+ * @summary Whiteflag WHL arguments module
+ * @description Module that handles the command line arguments
+ */
+module.exports = {
+    // WHL site functions
+    getSites
+};
+
+// Node.js core and external modules //
+const fs = require('fs');
+const parseXML = require('xml2js').parseString;
+
+// WHiteflag WHL modules //
+const httpreq = require('./common/httpreq');
+
+// Module constants //
+const WHLNATURAL = 'natural';
+const WHLURL = 'https://whc.unesco.org/en/list/xml/';
+const whlPropertiesRemove = ['query', 'row'];
+
+// MAIN MODULE FUNCTIONS //
+/**
+ * Gets the site information from the WHL
+ * @function getSites
+ * @alias module:lib/whl.getSites
+ * @param {object} options the options provided on the command line
+ * @param {function} callback function to be called upon completion
+ */
+function getSites(options, callback) {
+    // Get WHL from the web or file
+    getWHL(options, function getWHLCb(err, whl) {
+        if (err) return callback(err);
+        if (options.verbose) console.log(`Retrieved WHL consists of ${whl.length} entries`);
+
+        let sites = [];
+        let count = 0;
+        let skipped = 0;
+        if (!options.sites) {
+            // No site(s) specified; get all sites
+            if (options.verbose) console.log('Extracting all sites from WHL');
+            for (let i = 0; i &lt; whl.length; i++) {
+                const site = extractSite(whl, i);
+                if (site.category.toLowerCase() !== WHLNATURAL) {
+                    sites[count] = site;
+                    count++;
+                } else {
+                    skipped++;
+                }
+            }
+        } else {
+            // Site(s) specified
+            for (let i = 0; i &lt; options.sites.length; i++) {
+                const index = whl.findIndex(site => site.id_number === options.sites[i].toString());
+                if (index >= 0) {
+                    const site = extractSite(whl, index);
+                    if (site.category.toLowerCase() !== WHLNATURAL) {
+                        sites[count] = site;
+                        count++;
+                    } else {
+                        skipped++;
+                    }
+                }
+            }
+        }
+        // Results
+        if (options.verbose) {
+            if (skipped) console.log(`Skipped ${skipped} natural heritage sites from WHL`);
+            console.log(`Processed data of ${sites.length} cultural heritage sites from WHL`);
+        }
+        return callback(null, sites);
+    });
+}
+
+// PRIVATE FUNCTIONS //
+/**
+ * Gets the WHL XML data from URL or file and converts it to an object
+ * @private
+ * @param {object} options the options provided on the command line
+ * @param {function} callback function to be called upon completion
+ */
+function getWHL(options, callback) {
+    if (options.file) {
+        // Get WHL XML data from file
+        if (options.verbose) console.log(`Reading WHL from ${options.file}`);
+        fs.readFile(options.file, function fileGetWHLCb(err, data) {
+            if (err) return callback(new Error(`Error while reading WHL from file: ${err.message}`));
+
+            // Parse the WHL XML data
+            parseXML(data, {explicitArray: false}, function parseXMLCb(err, whl) {
+                if (err) return callback(new Error(`Cannot process XML data from ${options.file}: ${err.message}`));
+                return callback(null, extractWHL(whl));
+            });
+        });
+    } else {
+        // Determine URL to get WHL XML data from an internet resource
+        let url;
+        if (!options.web) options.web = WHLURL;
+        try {
+            url = new URL(options.web); // eslint-disable-line no-undef
+        } catch(err) {
+            return callback(err);
+        }
+        // Perform HTTP request
+        if (options.verbose) console.log(`Retrieving WHL from ${options.web}`);
+        httpreq.get(url, function httpGetCb(err, data) {
+            if (err) return callback(new Error(`Error while retrieving WHL from ${options.web}: ${err.message}`));
+
+            // Parse the WHL XML data and return resulting list
+            parseXML(data, {explicitArray: false}, function parseXMLCb(err, whl) {
+                if (err) return callback(new Error(`Cannot process XML data from ${options.web}: ${err.message}`));
+                return callback(null, extractWHL(whl));
+            });
+        });
+    }
+}
+
+/**
+ * Puts WHL site data from the full list into an array
+ * @private
+ * @param {object} whl the full WHL
+ * @returns {array} the clean WHL
+ */
+function extractWHL(whl) {
+    // Extract the array with the list from the larger WHL object
+    for (let i = 0; i &lt; whlPropertiesRemove.length; i++) {
+        if (Array.isArray(whl)) break;
+        whl = whl[whlPropertiesRemove[i]];
+    }
+    return whl;
+}
+
+/**
+ * Gets the site data from WHL data
+ * @private
+ * @param {array} whl the WHL
+ * @param {number} index the WHL site index number
+ * @returns {object} site data
+ */
+function extractSite(whl = [], index = 0) {
+    // Get site data from WHL entry
+    const entry = whl[index];
+    const site = {
+        id: entry.id_number,
+        name: entry.site,
+        category: entry.category,
+        url: entry.http_url,
+        date: new Date(entry.date_inscribed),
+        lat: entry.latitude,
+        long: entry.longitude
+    };
+    // Return the results
+    return site;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_common_httpreq.html">lib/common/httpreq</a></li><li><a href="module-lib_whiteflag.html">lib/whiteflag</a></li><li><a href="module-lib_whl.html">lib/whl</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Mon Jun 01 2020 13:38:15 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

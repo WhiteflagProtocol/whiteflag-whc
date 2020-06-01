@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Whiteflag WHL Utility</h1>
+<h2>Introduction</h2>
+<p>Whiteflag is a fully neutral and secure communciations means based on
+blockchain technology. It enables near real-time communication in armed
+conflicts and disasters to exchange early warning and status information
+to create shared situational awareness.</p>
+<p>This Whiteflag utility is a <a href="https://nodejs.org/en/about/">Node.js</a> command
+line interface (CLI) that creates and sends Whiteflag messages for specified
+cultural heritage sites listed on the UNESCO World Heritage List. This is the
+digital equivalent of placing a physical protective sign.</p>
+<p>Note that this utility only processes <em>cultural</em> heritage sites, because
+Whiteflag (currently) only defines a message (<code>P52</code>) that corresponds with the
+protective sign for cultural property i.a.w. <a href="http://www.unesco.org/new/en/culture/themes/armed-conflict-and-heritage/convention-and-protocols/1954-hague-convention/">the 1954 Hague Convention</a>. The <code>P52</code> protective sign message is followed by an <code>R1(3)</code> resource message with an URL linking the protective sign to the corresponding WHL entry.</p>
+<p>This utility is for technology development, test and evaluation purposes only.
+This means that it is a tool in support of testing the Whiteflag protocol, but
+it is not designed and tested for secure usage and performance in a production
+environment.</p>
+<h2>Installation</h2>
+<h3>Prerequisites</h3>
+<p>To deploy the Whiteflag WHL utility, make sure the following prerequisite
+software is installed:</p>
+<ul>
+<li><a href="https://nodejs.org/en/about/">Node.js</a> including <a href="https://www.npmjs.com/get-npm">NPM</a></li>
+</ul>
+<h3>Deployment</h3>
+<p>First, copy the repository to the deployment directory, such as
+<code>/opt/whiteflag-whl</code>. Please use a version tagged commit for a stable version.</p>
+<p>After copying the repository, install the required Node.js modules of external
+software libraries and then create a global link to the package by running the
+following commands in the deployment directory:</p>
+<pre class="prettyprint source lang-shell"><code>npm install
+npm link
+</code></pre>
+<h2>Usage</h2>
+<p>To invoke the Whitefag WHL utility from the command line, use the <code>wfwhl</code>
+command with the following arguments from any directory:</p>
+<pre class="prettyprint source"><code>wfwhl [-s &lt;id> ...] [-w &lt;url>|-f &lt;file>]
+      [-t -i &lt;url> -b &lt;blockchain> -a &lt;address>] [-ov]
+</code></pre>
+<h3>Options</h3>
+<p>The main options are the following:</p>
+<ul>
+<li><code>-s</code>, <code>--sites</code>        : Specifies the world heritage site(s) by &lt;id&gt; number; multiple sites may be specified. If no sites are specified, all sites are processed.</li>
+<li><code>-w</code>, <code>--web</code>          : The source &lt;url&gt; of the WHL in XML on the web. If not specified the default is <code>https://whc.unesco.org/en/list/xml/</code>. Cannot be used with <code>-f</code>.</li>
+<li><code>-f</code>, <code>--file</code>         : The source &lt;file&gt; containing the WHL in XML. Cannot be used with <code>-w</code>.</li>
+<li><code>-t</code>, <code>--transmit</code>     : Transmit the Whiteflag message(s) on the blockchain. Requires <code>-i</code>, <code>-b</code> and <code>-a</code> to be specified.</li>
+<li><code>-i</code>, <code>--interface</code>    : The Whiteflag API REST interface &lt;url&gt; to post the message(s) to be sent.</li>
+<li><code>-b</code>, <code>--blockchain</code>   : The &lt;blockchain&gt; to be used for sending the message(s).</li>
+<li><code>-a</code>, <code>--address</code>      : The blockchain &lt;address&gt; to be used for sending the message(s).</li>
+<li><code>-o</code>, <code>--stdout</code>       : Send the Whiteflag message(s) to stdout. This allows the data to be piped to other processes.</li>
+<li><code>-v</code>, <code>--verbose</code>      : Provide detailed processing output.</li>
+</ul>
+<p>Other supporting options are:</p>
+<ul>
+<li><code>--help</code>       : Show help message.</li>
+<li><code>--version</code>    : Show version number.</li>
+<li><code>--config</code>     : Path to a JSON config file with preconfigured arguments; especially useful to specify Whiteflag API URL, blockchain and address.</li>
+</ul>
+<h3>Examples</h3>
+<p>To use the default WHL website as the source to create Whiteflag messages for
+world heritage site 23 and output them on standard output:</p>
+<pre class="prettyprint source lang-shell"><code>wfwhl -s 23 -o
+</code></pre>
+<p>To use a file with the WHL XML data as the source to create Whiteflag messages
+for 3 world heritage sites, with detailed processing information and the
+Whiteflag messages on standard output:</p>
+<pre class="prettyprint source lang-shell"><code>wfwhl -f /data/whl.xml -s 23 25 32 -o -v
+</code></pre>
+<p>To send Whiteflag messages for all cultural heritage sites from the WHL XML
+list contained in a file to standard output:</p>
+<pre class="prettyprint source lang-shell"><code>wfwhl -f /data/whl.xml -o
+</code></pre>
+<p>To transmit Whiteflag messages for 2 specified world heritage sites, with the
+Whiteflag API interface and blockchain details in a JSON configuration file
+and detailed processing information:</p>
+<pre class="prettyprint source lang-shell"><code>wfwhl -s 29 49 --config wfwhl.json -t -v
+</code></pre>
+<p>where the <code>wfwhl.json</code> configuration file contents may look as follows:</p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;interface&quot;: &quot;http://localhost:5746&quot;,
+    &quot;blockchain&quot;: &quot;ethereum&quot;,
+    &quot;address&quot;: &quot;10fe33a6a1B26877a2d6fA95eaf4153608B5B5f9&quot;
+}
+</code></pre>
+<h2>License</h2>
+<p>The Whiteflag WHL utility is dedicated to the public domain under the
+<a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC0-1.0 Universal Public Domain Dedication</a>.
+statement. Note that this only applies to this software, and that this
+explicitly DOES NOT imply endorsement or permission by UNESCO to use
+WHL information, which is subject to the <a href="https://whc.unesco.org/en/disclaimer/">terms and policies of the UNESCO World Heritage Centre</a>.
+Please see <code>LICENSE.md</code> for details.</p>
+<p>The Whiteflag WHL utility requires third party software packages, which are
+not part of this distribution and may be licenced differently.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_common_httpreq.html">lib/common/httpreq</a></li><li><a href="module-lib_whiteflag.html">lib/whiteflag</a></li><li><a href="module-lib_whl.html">lib/whl</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Mon Jun 01 2020 13:38:15 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
